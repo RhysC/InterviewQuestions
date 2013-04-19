@@ -1,0 +1,41 @@
+ASP.NET MVC
+Why did MVC come about? what inspried it?
+Why would you use it over web pages? (and visa verca)
+What are some every day things that you benfit from when using MVC - how is a devs life better beacause of it?
+What are some gotchas?
+
+JAVASCRIPT :
+In many languages the curly brace placement is a matter of prefence, in javascript there is a particualr style that is more strongly enforced than in other laguages. 
+  What is that style and why is it so strongly enforced by various tools?
+
+Given this block of code:
+        $.get(formattedUrl,
+             { feedback: self.SelectedFeedback() },
+             self.success);
+
+    -What does this block of code do?
+    -How could you test that?
+    
+Given this block of code:
+        var myobject = {
+                 id:'Freddy', 
+                 doSomething: function(){ console.log(this.id);}
+                }
+        $("#myDomElement").click(myobject.doSomething)
+
+    - what does it do?
+    - what do you think the author intended for it to do?
+    - how do you solve that problem? (There is  more than one way to skin this cat)
+    
+REST/HTTP
+The boss has told you that you need to provide the ability for a search in your ASP.net site. 
+-it needs to search for people on
+  the persons name 
+    and/or 
+  the persons date of birth. 
+-It is expected to be exposed via "Restfull API"
+
+What are some of the ways you could do this? 
+How would YOU specifically implement this? 
+What would a test call look like?
+How would you test this?
