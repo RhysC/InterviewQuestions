@@ -26,6 +26,21 @@ Given this block of code:
     - what does it do?
     - what do you think the author intended for it to do?
     - how do you solve that problem? (There is  more than one way to skin this cat)
+
+Given this block of code:
+        for(var i=0;i<10;i++){
+          setTimeout(function(){
+            console.log(i);
+          },10);
+        }
+
+        for(var j=11;j<20;j++){
+            console.log(j);
+        }
+    - what is the expected output? why?
+    - what is the threading model in JS (assuming in a browser)
+    - how is memory managed in js?
+
     
 REST/HTTP
 The boss has told you that you need to provide the ability for a search in your ASP.net site. 

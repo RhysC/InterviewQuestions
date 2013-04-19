@@ -1,0 +1,349 @@
+Can you explain an abstract class 
+What are the restrictions placed on an abstract class (ie that are not on concrete/sealed) 
+What is the difference between an Interface and abstract class 
+Can a struct be abstract 
+Can a struct implement an interface 
+What is the consequence of implementing an interface on a struct/ Why could implementing an interface on a struct be a bad thing?
+
+An event is effectively a subclass of another type, what is that type
+Show the standard practice for raising an event. 
+Explain why the standard practice for raising an event is what it is. 
+The event syntax sugar += and -= boils down to what code?
+
+What is recursion
+What problems can recursion solve
+What problems can recursion create
+How could you work around the problems that recursion creates
+
+Can you explain what the IDisposable interface is used for 
+Can you explain when you might use IDisposable? 
+What are the standard practices for using an object that implements IDisposable
+What are the standard practices for implementing IDisposable,  
+Should lead to finalizer questions. Give me a high level explaination of Finalizer/GC/IDisposable 
+How is memory allocated in normal usage in .NET
+Can you identify under what conditions a Garbage Collection is run
+Can you explain what happens during a garbage collection
+What impact does a finalizer have on the lifetime of an object
+
+What ways can you execute code that runs concurrently to some other code. 
+Can you list the reasons why using Tread.Start could be bad
+What are the dangers of using concurrent code 
+What is a race condition
+How would you deliberately create a deadlock
+Can you explain the lock keyword --> With out the lock keyword how would you replicate it's behaviour
+Can you explain why locking on this or a type or a value type is bad
+What is the difference between Monitor.Enter and Monitor.Wait
+Can you describe the difference between Mutex and a Semaphore
+Can you describe the difference between a ManualResetEvent and an AutoResetEvent
+
+Can you list the 2 key interfaces to LINQ
+Can you describe the difference between a lambda and an anonymous method/delegate
+Can you explain the difference between Func and Expression
+What is an expression tree
+What is an Anonymous Type. What are the behaviours it exhibits
+White board question: method that returns IEnumerable<String> and has three yields, with the last one wrapped in a try-finally. Discuss.
+
+Draft questions...
+
+How could you load an Assembly into memory run some code on it and then release it from memory
+What is an alternative pattern to using .NET events
+Can you explain what a week reference is
+Dynamic code is new to .NET 4.0. Can you explain how the var keyword fits in to this new model
+Can you explain what deferred execution is, what patterns and types you could use to apply it and what the opposite of deferred execution is
+Why might you strong name an assembly
+Why might building up SQL as string ins code at run time be a bad idea
+What is a Cross-site scripting attack
+
+
+Courteous coding
+
+Naming conventions
+Documentation
+Difference between stub/mock/fake/dummy
+Dummy – passed around but never actually used. (may indicate a bad design?)
+FAKE – Hard coded implementation of an instance
+Stub – Implementation of Interface to satisfy contacts. May return pre canned results
+Spy – Variation of a Stub that may record activity
+Mock – Implementation of Interface that can have expectation set about what is or is not called on it. Strict Mocks will fail a test if unexpected calls are made (Brittle tests), Partial Mocks allow Partially Mocking of existing classes (good for mocking framework code), Dynamic Mocks allow setting expectations but will return Default(T) for any unexpected calls.
+Unit tests are a common form of testing what are some other types of Software testing and how do they differ from unit testing
+Integration testing
+System testing + Non Functional testing (Usability, Performance, Security, Stability, Localization)
+System Integration testing
+User Acceptance Testing
+Manual Testing
+What are some testing frameworks/platforms and what are their benefits
+Fitness
+White - User Interface Testing
+Pex - White box edge case testing
+Chess - Concurrency testing
+QTPro
+Galio
+How would you test a protected method?
+
+
+
+Security
+
+Basics of security
+Who am I – Authentication and Identity
+Who are you – A & I + Digital signatures/Public keys
+Message/Communication privacy (cant be read by others) - Encryption
+Message/Communication authenticity (cant be spoofed, modified or replayed by others) – Message Integrity
+Can you do this task - Authorization
+Who did what and when - Audit
+Cryptography. Public/private (Symmetric/asymmetric) keys
+A.A.A
+Windows authentication
+STS/ SAML/OpenId/OpenAuth
+Proxy authentication - > connection pooling
+CAS POL
+
+Integration systems
+
+ABCs of WCF
+Messaging
+Tenets of SOA
+Private vs Public endpoint, and difference in approach/rules
+Duplex
+P2P
+
+Design patterns
+
+IoC/DI
+SOLID
+(D)DDD
+MVP/MVC/MVVM
+View first vs Presenter/Controller first
+Singleton vs Monostate vs singleton(IoC)
+How would you go about writing a singleton? Would use an IoC instead, but if I had to I would create a private ctor and lazy load an instance on a readonly property named instance under a double checked lock
+
+
+.NET concepts
+
+Structs and Classes (value and referece types)
+What is the difference between a strut and a class?
+Struct is a value type that is (generally*) stored on the stack. It should follow the guidelines of being small, having value semantics, ideally be immutable and will not partake in an object hierarchy. Structs are copied by value on the stack to other variables or as parameters.Value type can exist on the heap if boxed or part of an object (eg int[] lives on the heap).
+reference types are stored on the heap with a pointer to the heap on the stack. Objects have a slight over head compared to Structs as they require a pointer on the stack and also need extra metadata stored on the heap (type object point and sync block index). Objects are passed by ref where only copies of the pointer to the heap address is passed to other variables or method parameters. Objects partake in garbage collection (stucts just pop off the stack as they go out of scope).
+Boxing (casting (implicit))
+Boxing is where a value type is treated as a reference type. Under these scenarios a Value type/struct can exist on the heap. int i = 5; object o = i;
+Unboxing is casting the type back to a value type. int i = 5; object o = i; int j = (int)o;
+Equality (reference, .Equals, ==)
+Operators (operator ==)
+GetHashCode.
+Should have random and even distribution (from Int.Min -Int.Max)
+probably use Prime numbers as the base for a hash (17, 23)
+Can cheat and create an Anon type to get M$ hash alg for free (but with an allocation)
+http://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode
+http://eternallyconfuzzled.com/tuts/algorithms/jsw_tut_hashing.aspx
+Lambdas, delegates, multicast, Combine?
+Closures
+GC
+What is the GC
+What is FReachable 
+What are ways a memory leak can occur? (Event handlers are my biggest one. What others?)
+Definition:
+Garbage collection is invoked when:
+GC.Collect is called
+a new allocation is requested and the GC decides that a collection is required.
+Generation0 is full
+Windows reports low memory conditions
+CLR is unloading an AppDomain, in which case nothing in the AppDomain is a root
+CLR is shutting down (The GC will not compact under this scenario as all memory will be reclaimed by the OS).
+If a single finalizer takes more than max time (~2sec) then CLR kills the process and no more finalisers are called
+If running all of the finalizers takes more than 40s, then again the CLR kills the process.
+3 generation GC (gen0, gen1 & gen2) therefore it is a generational garbage collector or an ephemeral garbage collector
+Roots are generally defined from pointers on the stack(locals or params) or Global varbs
+Stack (Locals or Parameters)
+Static global variables
+Objects on the Freachable queue
+'Mark and sweep'/'Mark and compact'/ 'Trace collector' walks object graphs from roots marking all objects referenced as 'Live' or 'Reachable'. Un marked objects are considered 'dead'
+All objects are considered garbage to start with
+Marking an object as live actually flips a bit on the object's sync block index field
+Objects in Gen 1&2 have their Dirty state using Write-Barriers to calculate memory chunks that are dirty. Card table is flagged. 
+Card table helps to track objects related to dirty memory chunks.
+Objects marked as dirty (via writebarrier and card table) can now effectively become roots, or partake in recursive object graph traces
+Objects not marked as dirty that live in a higher generation are ignored
+If an object is already marked then the recursion stops. This gives slight performance enhancement and prevents circular references creating infinite loops
+Appears to be a depth first recursion not width first. ie checks one root completely then next root, etc.
+Anything that is dead or not reachable is 'condemned'.
+For all dead objects, ones with finalisers are moved to the FReachable queue. Objects on the Freachable are considered temporary roots
+Remaining dead objects are deallocated and memory is reclaimed and compacted.
+collector traverses the heap linearly looking for contiguous blocks of unmarked objects
+small blocks may be left alone (what is small?)
+Collector shifts objects down in memory to compact heap over large blocks of unmarked heap
+All pointers and registers are corrected to new address space
+"NextObjPtr" is set to the address space at the end of the managed heap
+Objects surviving the collection are promoted a generation.
+There are never any gaps in memory
+Memory is allocated in order, so objects are near objects of similar age. This physical locality can have benefits such as closely created objects existing in CPU cache together.
+gen0 is collected more often than gen1 and gen1 more so than gen2
+Pointers to Objects with finalizers are added to a Finalizer queue when the object IS CONSTRUCTED.
+Objects inheriting from CriticalFinaliserObject have their Finalizer hierarchy complied at Construction by the JITter
+CriticalFinalizersObject s are finalized after non-CriticalFinalizersObject s. This guarantees that everything can be released appropriately
+CriticalFinalizersObject s are finalized if AppDomains abort rudely.
+SafeHandle types are the most common implementations of CriticalFinalizerObject. This allows safe handles to native resources such as fileHandles & waitHandle (Kernel mutexs etc).
+If an object is flagged as dead but is in the finalizer queue then it is moved to the freachable queue (resurection)
+Objects on the finalizer queue are essentially a temporary root from the collector's perspective. This means all pointers from Freachable objects are considered live.
+Once collection is complete "Finalizer thread" will asynchronously iterate the FReachable queue and invoke the finaliser.
+Even if an exception is thrown from the Constructor of an object, it's Finaliser will still be set to run
+Finalizers cant make any assumptions about the state of the object! (See above)
+Once objects are finalised they are then available for collection (on a following collection, whew)
+IDisposable allows objects with known lifetime to release their resources, avoiding finalizer queue
+Disposal or Releasing resources is explicit and different from Finalisation/Collection which is implicit, automatic and occurs at an unknown time.
+Implementations of IDisposable should suppress the need to finalise by calling GC.SuppressFinalize(this);
+Finalisers are not really the same as destructors (C++) as a destrcutor runs immediately when an object goes out of scope. It is unknown when a finaliser would run.
+Finalization should be a backup/failsafe to Disposal
+Finalizers force a class to be queued for finalisation which means reclaimed the space is deffered and it extends the lifetime of an object and therefore the time memory is unnecessarily allocated to it. (ie there is a cost to implementing a finaliser with out dispose calling GCSuppress..)
+GC.Collect may be a sensible thing to do if you know that memory should be reclaimed but no allocations will be made to invoke a GC.Collect. eg WinService finishes for the next 24hrs, it should release its memory.
+GC.Collect(int generation) can be called to only collect up to a specified generation. Obviously only 0&1 are sensible parameters to be passed as passing 2 is the same as GC.Collect(). GC.MaxGeneration property can tell you the MaxGenerations supported (returns 2 as at .NET3.5sp1)
+Finalizers should:
+be fast
+not block
+not reference objects
+not throw exceptions
+not be thread specific as they will run on a Finalizer thread (ie no access to ThreadStatic/ThreadLocal)
+Task manager is a poor indicator of a true working set of memory. Task manager includes memory that has been internally deallocated but not yet released to other processes (not memory pressure to do so)
+Correctly Identify memory consumption with : new PerformanceCounter("Process", "Private Bytes", Process.GetCurrentProcess().ProcessName).NextValue();
+During garbage collection, all managed threads are suspended
+On multi-proc systems the gen0 can be partitioned into multiple memory arenas (1/thread). This circumvents the need for exclusive access to the heap.
+For Multi-proc Server set ups (GCSetting.ISServerGC==true -or-  <gcserver enabled="true"/> -or- ASP.NET -or- SQL Server)
+on concurrent collections (multi-proc) a background thread with normal priority marks un reachable objects. It competes with the application threads for CPU time.
+when collection is invoked it is very quick as the marking has already been done in parallel
+often memory will not be compacted, which increases working set but delivers faster collections.
+Interfaces vs abstract classes
+App domains
+Creates an isolation boundary for loading and unloading assemblies.
+Allows separate security  levels between app domains
+Allows loading of large or optional assemblies, and then unloading them. Assemblies loaded to the default App Domain cannot be unloaded.
+Useful when the default app domain must be long running and should not fail if a sub app domain does
+Have used in Web application for dynamically loading an assembly and then performing a long running process on it (Print catalog)
+Strong naming, versioning and the GAC. Side by side versioning?
+LINQ, Expression trees
+.NET 4 (DbC, MEF, Rx)
+DateTime issues
+
+WPF Beginner
+
+Q: Name some of the Panel controls in WPF.
+
+A: Grid, Canvas, UniformGrid, DockPanel, StackPanel, WrapPanel
+
+
+Q: What is the difference between a UserControl and a Custom control.
+
+A: A Custom control is a "Look less" control with its look applied by a theme (normally via the Generic theme). A UserControl is like a Web or WinForm control where the Presentation is bound to the logic via a "Code Behind" file. UserControls are nice for people making a transition to WPF, but eventually screw up your project as they are encourage coupling of the Presentation layer to domain logic and are difficult to test.
+
+
+WPF Intermediate
+
+Q: Name some different markup extensions used in Binding.
+A: Binding, MultiBinding, PriorityBinding (all inherit from BindingBase), RelativeSource & TemplateBinding.
+
+Q: What are some of the change notification systems avaliable to WPF?
+A: DependencyProperties, INotifyPropertyChanged, INotifyCollectionChanged (eg. ObservableCollection) and the legacy IBindingList
+
+Q: What is the difference between an AttachedProperty and a DependencyProperty?
+A: A dependency property allows databinding and values to be inherited to through the logical tree. An attached property is a property that belongs to another class but can be set against any other dependency object and example of an attached property is DockPanel.Dock or Grid.Column. An attached property is itself a form of dependency property. In theory an AttachedProperty is a form of AOP (Aspect Orientated Programming).
+
+Q: Explain what the dispatcher is.
+A: The answer should be something along the lines of : It is a queing mechnism for the UI thread to process tasks based on a set of priorities.
+Most people wont have a bloody clue. Some people will say it is the UI thread of WPF which it is not, but they should get credit for being in the same ball park.
+
+Q: Explain what command binding is.
+A: The answer should mention
+that it is an advancement from normal event handling.
+it provides the extra feature of the CanExecute which can enable and disable buttons/menuitems.
+it provides a way to assign gestures to actions (such as key strokes or mouse buttons)
+it provides the ability to have multiple things using the same command such as multiple buttons, menu items, key gestures and mouse gestures.
+extra bonus points if they mention DelegateCommand, CompositeCommand or the inability to use binding with input gestures* and commands. * However there are tools and tricks that allow you to wire up an Input Gesture to a command in XAML.
+
+WPF Advanced
+
+Q: Difference between Style, DataTemplate and a ControlTemplate
+A: A style provides the feature to set the Dependency properties of a DependencyObject. The standard use is to specify combinations of settings for standard styles. Eg a style called TextBlockHeaderStyle may target the TextBlock control type and set its font family, font size and color to that appropriate for a Heading. Styles can be set inline or created as a keyed resource for reuse. Keyless Styles will be applied to all types that the style targets. A DataTemplate provides the ability to define the way a Type will be represented visually. Within the DataTemplate the developer can composite other controls together to create a look for the type. Within the DataTemplate the DataContext is the type so Binding becomes simplied. A ControlTemplate is similar to a DataTemplate, but can only be applied to the Template property of a Control. Also you can access the DependencyProperties of the Control via the TemplateBinding
+
+Q: How could you dynamically Skin a WPF application?
+A: By implementing DynamicResources you can substitute the Style resources at run time.
+
+Q: What is the difference between Themes and "Skins".
+A: Themes apply to the the Windows Theme that the OS is using. Win2000 is "Classic" XP is "Luna" and Vista is "Aero". Users are able to make a change to the theme on there OS and it be applied to all applications. For example XP or Vista OS can choose to downgrade to "Classic" or "Royal" (a variation of luna)G. Developers creating CustomControls should either provide a generic Theme or provide a Look for each Theme. A skin is a logical group of styles. WPF as a framework doesnt have a concept of skins but the general idea is that by substituting a resource dictionary in the App.Xaml file the look of the application can be changed at run time.
+
+Q. Explain how to maintain a Responsive User Interface in WPF and some of the challenges developers face when trying to achieve a responsive UI.
+A: First it would be good if they know what a responsive UI is. Basically it means the UI should never freeze when doing something, and ideally provide feedback when it is processing (Progress bar, status bar etc). God candidates will mention cancellation process too. The answer should be along the lines of; Minimal amounts of work should be done on the dispatcher thread as that would block the UI from refreshing (mouse overs, animations etc). Any real work (like service calls, reading files, loops etc) should be done on a background thread. If the BG thread needs to communicate with the UI while it is running then it would have to do so via Dispatcher.Invoke or Dispatcher.BeginInvoke.Bonus points for mentioning Rx or async/await.
+
+Q: Describe various ways you would construct an application so that it was testable.
+A: There is no hard and fast answer for this question. But the answer will tell you if the candidate knows about TDD or at leat testing approaches. If you can test your application, it will get out of control with in 6months and most the time will be spent on regression bugs and manual testing. Correct answers should include phrases such as :
+MVC or MVP or MVVM
+IoC (Inversion of control), DI (Dependency Injection), container, Unity, Windsor, StructureMap, Ninject etc...
+Unit Test, Integration Test, Automated testing
+Automated Build, CruiseControl, Team City
+Prism as it has some features that enable WPF application to be written in a testable way.
+
+Just for fun you could ask them if they know what the following are:
+New features in .NET for WPF
+Prism aka Composite Guidance aka Composite Application Library aka CAL aka CompositeWPF(Come on Microsoft can we have just one name for this thing?). Compare to Caliburn/Caliburn.micro, ReactiveUI etc..
+Visual State Manager
+Surface
+Describe the VSM and why you would use it WPF
+What does the Visual state manager provide that is different from what WPF originally provided?
+List the Object Hierarchy of ContentControl
+
+Web technologies
+
+Life cycle of a web page in aspx (pfft)
+Common javascript libraries
+Common mvc libraries/frameworks
+
+Concurrency
+
+Name the various mutex/locking primitives and when you would use each / what are they used for?
+WaitHandle - The abstract base class of the other locking/waithandle primitives. Provides useful static method (overloads) of WaitAll and WaitAny which both fundamentally take an array of WaitHandles and either wait till All or Any of them are signaled until the thread is no longer blocked. Defines virtual WaitOne(), Close() and Dispose() methods.
+EventWaitHandle
+AutoResetEvent - Has no concept of ownership. When signalled only one thread waiting on the AutoResetEvent will see the signalling and atomically transition the handle back to nonsignalled and stop blocking the thread. This has the effect of Mutual Exclusion. Essentially it queues waiting threads in a FIFO fashion.
+ManualResetEvent - Has no concept of ownership. Allows multiple threads to wait on the same event. Good for one-time events.
+Mutex - Mutually-Exclusive-region-->MutEx. The WaitOne() will block until the handle becomes signalled and the ownership is given to the waiting thread. ReleaseMutex() method signals the handle again. 
+Semaphore - Is created with an initial count and a maximum count. Calls to WaitOne() will block when the counter is at zero until the counter goes up. WaitOne will atomically take one from the counter when it is signalled. Release() will add one back to the counter up to the maximum specified at constuction time. Good for Producer/Consumers scenarios like connection pooling or resource sensitive Queues.
+What is a monitor. What is the difference between a monitor and a mutex.
+Monitor is a lightweight managed Thread Sync primitive. Its access is localized to an AppDomain. A mutex can be used across process and is a kernel level primitive (like a semaphore)
+What does setting the IsBackground property do on a thread. What ways can this be set?
+When would you use a ReadWriterLock
+What are some of the issues with Concurrency? Race conditions --> Live/deadlocks --> Thread ownership (eg VeifyAccess on Dispatcher)
+Thread creation/destruction, overhead, scheduling and priorities
+Tools for monitoring and debugging threads
+Reasons to use threads and why
+Performing asynchronous compute-bound operations using the CLR’s thread pool, Timers, and Tasks (new in .NET 4.0)
+Performing asynchronous I/O-bound operations using the CLR’s Asynchronous Programming Model
+Using special language features (anonymous methods, lambda expressions, and iterators) to make asynchronous programming easier.
+Performing asynchronous I/O-bound operations using the Event-based Asynchronous Programming Model
+Primitive (user-mode and kernel-mode) thread synchronization constructs including volatile fields, interlocked methods, SpinLocks
+Hybrid thread synchronization constructs including mutual exclusive locks, reader-writer locks, new .NET 4.0 locks
+Comparing the behavior and performance of locks
+How locks work internally and how to modify a lock’s behavior
+The ReaderWriterGate: A lock that doesn’t block any threads.
+
+Code Reviews
+
+How can you make this code "faster"
+class Example
+{
+    private readonly SlowRepository _repo = new SlowRepository();
+    private readonly Dictionary<string, Record> _cache = new Dictionary<string, Record>();
+
+    public Record GetItem(string name)
+    {
+        if (!_cache.ContainsKey(name))
+        {
+            //Very slow call, but thread safe.
+            _cache[name] = _repo.GetItem(name);
+        }
+        var record = _cache[name];
+        return record;
+    }
+}
+
+
+
+
+
+
+
